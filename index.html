@@ -1,0 +1,1422 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#ff4f87">
+    <title>Quiz da Amanda 💕</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Pacifico&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --rosa: #ff4f87;
+            --rosa-escuro: #db326b;
+            --rosa-claro: #ffe4ed;
+            --roxo: #7657ff;
+            --texto: #332631;
+            --muted: #786b75;
+            --verde: #159669;
+            --verde-claro: #e2f8f0;
+            --vermelho: #d8445f;
+            --vermelho-claro: #ffe4e9;
+            --borda: #efd7e0;
+            --branco: rgba(255, 255, 255, 0.94);
+            --sombra: 0 24px 60px rgba(125, 51, 86, 0.16);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            min-height: 100vh;
+            margin: 0;
+            overflow-x: hidden;
+            color: var(--texto);
+            font-family: "DM Sans", sans-serif;
+            background:
+                radial-gradient(circle at top left, #ffdbe8 0, transparent 34%),
+                radial-gradient(circle at bottom right, #ddd4ff 0, transparent 38%),
+                linear-gradient(135deg, #fff8fb 0%, #f8f4ff 100%);
+        }
+
+        body::before,
+        body::after {
+            position: fixed;
+            z-index: -1;
+            width: 320px;
+            height: 320px;
+            border-radius: 50%;
+            content: "";
+            opacity: .42;
+            filter: blur(8px);
+        }
+
+        body::before {
+            top: -130px;
+            left: -110px;
+            background: #ff91b5;
+        }
+
+        body::after {
+            right: -130px;
+            bottom: -130px;
+            background: #9b88ff;
+        }
+
+        button,
+        input,
+        textarea,
+        select {
+            font: inherit;
+        }
+
+        button {
+            border: none;
+        }
+
+        .app {
+            width: min(100% - 28px, 760px);
+            margin: 0 auto;
+            padding: 34px 0 24px;
+        }
+
+        .card {
+            position: relative;
+            overflow: hidden;
+            min-height: 620px;
+            padding: 46px;
+            border: 1px solid rgba(255, 255, 255, .85);
+            border-radius: 30px;
+            background: var(--branco);
+            box-shadow: var(--sombra);
+            backdrop-filter: blur(16px);
+        }
+
+        .card::before {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            content: "";
+            background: linear-gradient(90deg, var(--rosa), #ff95b7, var(--roxo));
+        }
+
+        .tela {
+            display: none;
+            animation: entrar .4s ease;
+        }
+
+        .tela.ativa {
+            display: block;
+        }
+
+        @keyframes entrar {
+            from {
+                opacity: 0;
+                transform: translateY(14px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .icone-grande {
+            display: grid;
+            width: 92px;
+            height: 92px;
+            margin: 0 auto 18px;
+            place-items: center;
+            border-radius: 28px;
+            background: linear-gradient(145deg, #fff, var(--rosa-claro));
+            box-shadow: 0 16px 32px rgba(255, 79, 135, .2);
+            font-size: 2.9rem;
+            transform: rotate(-4deg);
+        }
+
+        .sobretitulo {
+            display: block;
+            margin-bottom: 14px;
+            color: var(--rosa-escuro);
+            font-size: .82rem;
+            font-weight: 800;
+            letter-spacing: .1em;
+            text-align: center;
+            text-transform: uppercase;
+        }
+
+        h1,
+        h2,
+        h3,
+        p {
+            margin-top: 0;
+        }
+
+        h1 {
+            margin-bottom: 16px;
+            color: var(--rosa-escuro);
+            font-family: "Pacifico", cursive;
+            font-size: clamp(2.4rem, 8vw, 4rem);
+            font-weight: 400;
+            line-height: 1.1;
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 14px;
+            font-size: clamp(1.75rem, 5vw, 2.45rem);
+            line-height: 1.25;
+            text-align: center;
+        }
+
+        .texto-central {
+            max-width: 590px;
+            margin: 0 auto 25px;
+            color: var(--muted);
+            font-size: 1.03rem;
+            line-height: 1.7;
+            text-align: center;
+        }
+
+        .premios-iniciais {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px;
+            margin-bottom: 26px;
+        }
+
+        .mini-card {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            padding: 17px;
+            border: 1px solid var(--borda);
+            border-radius: 18px;
+            background: rgba(255, 255, 255, .72);
+        }
+
+        .mini-card > span {
+            font-size: 2rem;
+        }
+
+        .mini-card strong,
+        .mini-card small {
+            display: block;
+        }
+
+        .mini-card small {
+            margin-top: 3px;
+            color: var(--muted);
+            line-height: 1.35;
+        }
+
+        .botao {
+            display: flex;
+            width: 100%;
+            min-height: 57px;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 12px 18px;
+            border-radius: 16px;
+            cursor: pointer;
+            font-weight: 800;
+            transition: transform .2s ease, box-shadow .2s ease, opacity .2s ease;
+        }
+
+        .botao-principal {
+            color: #fff;
+            background: linear-gradient(135deg, var(--rosa), var(--rosa-escuro));
+            box-shadow: 0 14px 28px rgba(219, 50, 107, .24);
+        }
+
+        .botao-principal:hover:not(:disabled) {
+            box-shadow: 0 18px 34px rgba(219, 50, 107, .3);
+            transform: translateY(-2px);
+        }
+
+        .botao-secundario {
+            margin-top: 12px;
+            border: 1px solid var(--borda);
+            color: var(--rosa-escuro);
+            background: #fff;
+        }
+
+        .botao:disabled {
+            cursor: not-allowed;
+            opacity: .48;
+            box-shadow: none;
+        }
+
+        .cabecalho-quiz {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 18px;
+            margin-bottom: 20px;
+        }
+
+        .contador {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--rosa-escuro);
+            font-size: .84rem;
+            font-weight: 800;
+            letter-spacing: .06em;
+            text-transform: uppercase;
+        }
+
+        .cabecalho-quiz h2 {
+            max-width: 520px;
+            margin: 0;
+            text-align: left;
+        }
+
+        .pontos {
+            flex-shrink: 0;
+            padding: 9px 13px;
+            border-radius: 999px;
+            color: var(--roxo);
+            background: #eeeaff;
+            font-size: .82rem;
+            font-weight: 800;
+        }
+
+        .progresso {
+            overflow: hidden;
+            height: 8px;
+            margin-bottom: 29px;
+            border-radius: 999px;
+            background: #f0e7ec;
+        }
+
+        .barra {
+            width: 20%;
+            height: 100%;
+            border-radius: inherit;
+            background: linear-gradient(90deg, var(--rosa), var(--roxo));
+            transition: width .35s ease;
+        }
+
+        .opcoes {
+            display: grid;
+            gap: 13px;
+        }
+
+        .opcao {
+            display: flex;
+            width: 100%;
+            min-height: 67px;
+            align-items: center;
+            gap: 14px;
+            padding: 12px 17px;
+            border: 2px solid transparent;
+            border-radius: 18px;
+            color: var(--texto);
+            background: #fff;
+            box-shadow: 0 7px 20px rgba(77, 44, 62, .06);
+            cursor: pointer;
+            text-align: left;
+            transition: border-color .2s ease, transform .2s ease, background .2s ease;
+        }
+
+        .opcao:hover:not(:disabled) {
+            border-color: #efa7be;
+            transform: translateX(4px);
+        }
+
+        .letra {
+            display: grid;
+            width: 39px;
+            height: 39px;
+            flex-shrink: 0;
+            place-items: center;
+            border-radius: 11px;
+            color: var(--rosa-escuro);
+            background: var(--rosa-claro);
+            font-weight: 800;
+        }
+
+        .opcao.correta {
+            border-color: var(--verde);
+            background: var(--verde-claro);
+        }
+
+        .opcao.correta .letra {
+            color: #fff;
+            background: var(--verde);
+        }
+
+        .opcao.errada {
+            border-color: var(--vermelho);
+            background: var(--vermelho-claro);
+        }
+
+        .opcao.errada .letra {
+            color: #fff;
+            background: var(--vermelho);
+        }
+
+        .feedback {
+            min-height: 27px;
+            margin: 18px 0 10px;
+            font-weight: 800;
+            text-align: center;
+        }
+
+        .feedback.sucesso {
+            color: var(--verde);
+        }
+
+        .feedback.erro {
+            color: var(--vermelho);
+        }
+
+        .placar-final {
+            display: flex;
+            align-items: baseline;
+            justify-content: center;
+            gap: 9px;
+            margin-bottom: 23px;
+        }
+
+        .placar-final strong {
+            color: var(--rosa-escuro);
+            font-size: 2.45rem;
+        }
+
+        .placar-final span {
+            color: var(--muted);
+            font-weight: 700;
+        }
+
+        .destaque-premio {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin: 24px 0;
+            padding: 20px;
+            border: 1px solid #e1d9ff;
+            border-radius: 19px;
+            background: linear-gradient(135deg, #fff2f7, #f0ecff);
+        }
+
+        .destaque-premio > span {
+            font-size: 2.5rem;
+        }
+
+        .destaque-premio strong {
+            display: block;
+            margin-bottom: 4px;
+            font-size: 1.1rem;
+        }
+
+        .destaque-premio p {
+            margin: 0;
+            color: var(--muted);
+            line-height: 1.5;
+        }
+
+        .grupo-escolhas {
+            display: grid;
+            gap: 12px;
+            margin: 22px 0;
+        }
+
+        .escolha-card {
+            position: relative;
+            display: flex;
+            align-items: flex-start;
+            gap: 13px;
+            padding: 17px;
+            border: 2px solid transparent;
+            border-radius: 18px;
+            background: #fff;
+            box-shadow: 0 7px 20px rgba(77, 44, 62, .06);
+            cursor: pointer;
+        }
+
+        .escolha-card:hover {
+            border-color: #efa7be;
+        }
+
+        .escolha-card input {
+            margin-top: 4px;
+            accent-color: var(--rosa);
+        }
+
+        .escolha-card strong,
+        .escolha-card small {
+            display: block;
+        }
+
+        .escolha-card small {
+            margin-top: 3px;
+            color: var(--muted);
+            line-height: 1.4;
+        }
+
+        .campos-condicionais {
+            display: none;
+            margin: 16px 0 22px;
+            padding: 18px;
+            border: 1px solid var(--borda);
+            border-radius: 18px;
+            background: #fffafc;
+        }
+
+        .campos-condicionais.ativo {
+            display: block;
+            animation: entrar .3s ease;
+        }
+
+        .campo {
+            margin-bottom: 15px;
+        }
+
+        .campo:last-child {
+            margin-bottom: 0;
+        }
+
+        .campo label {
+            display: block;
+            margin-bottom: 7px;
+            font-size: .92rem;
+            font-weight: 800;
+        }
+
+        .campo input,
+        .campo textarea,
+        .campo select {
+            width: 100%;
+            min-height: 49px;
+            padding: 12px 13px;
+            border: 1px solid var(--borda);
+            border-radius: 13px;
+            outline: none;
+            color: var(--texto);
+            background: #fff;
+        }
+
+        .campo textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .campo input:focus,
+        .campo textarea:focus,
+        .campo select:focus {
+            border-color: var(--rosa);
+            box-shadow: 0 0 0 4px rgba(255, 79, 135, .1);
+        }
+
+        .grade-dupla {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 13px;
+        }
+
+        .roteiro {
+            margin: 22px 0;
+            padding: 20px;
+            border: 1px solid #d9d0ff;
+            border-radius: 20px;
+            background: linear-gradient(135deg, #fff, #f2efff);
+        }
+
+        .roteiro h3 {
+            margin-bottom: 13px;
+            color: var(--roxo);
+        }
+
+        .roteiro-linha {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 11px;
+            line-height: 1.5;
+        }
+
+        .roteiro-linha span {
+            min-width: 28px;
+            font-size: 1.15rem;
+        }
+
+        .aviso {
+            margin-top: 13px;
+            padding: 13px;
+            border-radius: 13px;
+            color: #675b28;
+            background: #fff8d8;
+            font-size: .9rem;
+            line-height: 1.5;
+        }
+
+        .status-envio {
+            min-height: 24px;
+            margin: 12px 0 0;
+            font-size: .9rem;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        .status-envio.sucesso {
+            color: var(--verde);
+        }
+
+        .status-envio.erro {
+            color: var(--vermelho);
+        }
+
+        .rodape {
+            padding-top: 18px;
+            color: var(--muted);
+            font-size: .84rem;
+            text-align: center;
+        }
+
+        .confetes {
+            position: fixed;
+            inset: 0;
+            z-index: 999;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .confete {
+            position: absolute;
+            top: -20px;
+            width: 10px;
+            height: 16px;
+            border-radius: 3px;
+            animation: cair linear forwards;
+        }
+
+        @keyframes cair {
+            to {
+                opacity: .15;
+                transform: translateY(110vh) rotate(720deg);
+            }
+        }
+
+        @media (max-width: 650px) {
+            .app {
+                width: min(100% - 18px, 760px);
+                padding-top: 12px;
+            }
+
+            .card {
+                min-height: calc(100vh - 58px);
+                padding: 33px 20px 25px;
+                border-radius: 22px;
+            }
+
+            .premios-iniciais,
+            .grade-dupla {
+                grid-template-columns: 1fr;
+            }
+
+            .cabecalho-quiz {
+                display: block;
+            }
+
+            .pontos {
+                display: inline-block;
+                margin-top: 13px;
+            }
+
+            .destaque-premio {
+                align-items: flex-start;
+            }
+
+            .placar-final {
+                flex-direction: column;
+                align-items: center;
+                gap: 0;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                scroll-behavior: auto !important;
+                animation-duration: .01ms !important;
+                transition-duration: .01ms !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <main class="app">
+        <section class="card">
+
+            <div id="telaInicial" class="tela ativa">
+                <span class="sobretitulo">Uma missão especial chegou ✨</span>
+                <div class="icone-grande">💌</div>
+
+                <h1>Olá, Amanda!</h1>
+
+                <p class="texto-central">
+                    Você ganhou a oportunidade de concorrer a
+                    <strong>dois prêmios incríveis</strong>.
+                    Tudo o que precisa fazer é acertar algumas perguntas!
+                </p>
+
+                <div class="premios-iniciais">
+                    <div class="mini-card">
+                        <span>🎁</span>
+                        <div>
+                            <strong>Primeiro prêmio</strong>
+                            <small>Um presente escolhido por você</small>
+                        </div>
+                    </div>
+
+                    <div class="mini-card">
+                        <span>💖</span>
+                        <div>
+                            <strong>Presente surpresa</strong>
+                            <small>Uma proposta um pouco mais especial</small>
+                        </div>
+                    </div>
+                </div>
+
+                <p class="texto-central">
+                    Está pronta para começar?
+                </p>
+
+                <button id="botaoComecar" class="botao botao-principal" type="button">
+                    Começar o desafio →
+                </button>
+            </div>
+
+            <div id="telaQuiz" class="tela">
+                <div class="cabecalho-quiz">
+                    <div>
+                        <span id="contadorPergunta" class="contador"></span>
+                        <h2 id="tituloPergunta"></h2>
+                    </div>
+
+                    <span id="pontos" class="pontos">0 pontos</span>
+                </div>
+
+                <div class="progresso">
+                    <div id="barraProgresso" class="barra"></div>
+                </div>
+
+                <div id="opcoes" class="opcoes"></div>
+
+                <p id="feedback" class="feedback"></p>
+
+                <button id="botaoProxima" class="botao botao-principal" type="button" disabled>
+                    Próxima pergunta →
+                </button>
+            </div>
+
+            <div id="telaResultado" class="tela">
+                <span class="sobretitulo">Resultado desbloqueado</span>
+                <div id="iconeResultado" class="icone-grande">🏆</div>
+
+                <h2 id="tituloResultado"></h2>
+                <p id="textoResultado" class="texto-central"></p>
+
+                <div class="placar-final">
+                    <strong id="placarFinal">0/5</strong>
+                    <span>respostas corretas</span>
+                </div>
+
+                <div id="premioAprovada" style="display:none;">
+                    <div class="destaque-premio">
+                        <span>🎉</span>
+                        <div>
+                            <strong>Você ganhou um vale-presente de R$ 150,00!</strong>
+                            <p>Agora escolha como prefere receber o seu prêmio.</p>
+                        </div>
+                    </div>
+
+                    <button id="irEscolherPremio" class="botao botao-principal" type="button">
+                        Escolher meu presente 🎁
+                    </button>
+                </div>
+
+                <div id="premioReprovada" style="display:none;">
+                    <div class="destaque-premio">
+                        <span>😏</span>
+                        <div>
+                            <strong>Quase lá!</strong>
+                            <p>Você precisa acertar pelo menos 4 perguntas para liberar os prêmios.</p>
+                        </div>
+                    </div>
+
+                    <button id="tentarNovamente" class="botao botao-principal" type="button">
+                        Tentar novamente
+                    </button>
+                </div>
+            </div>
+
+            <div id="telaValePresente" class="tela">
+                <span class="sobretitulo">Primeiro prêmio</span>
+                <div class="icone-grande">🎁</div>
+
+                <h2>Como você quer receber seus R$ 150,00?</h2>
+
+                <p class="texto-central">
+                    Escolha a opção mais confortável para você.
+                </p>
+
+                <div class="grupo-escolhas">
+                    <label class="escolha-card">
+                        <input type="radio" name="tipoPremio" value="PIX">
+                        <span>
+                            <strong>Quero receber via PIX</strong>
+                            <small>Informe a chave PIX para receber o valor.</small>
+                        </span>
+                    </label>
+
+                    <label class="escolha-card">
+                        <input type="radio" name="tipoPremio" value="Produto por link">
+                        <span>
+                            <strong>Quero enviar o link de um produto</strong>
+                            <small>Você escolhe o produto e informa onde deseja receber.</small>
+                        </span>
+                    </label>
+                </div>
+
+                <div id="camposPix" class="campos-condicionais">
+                    <div class="campo">
+                        <label for="chavePix">Sua chave PIX</label>
+                        <input id="chavePix" type="text" placeholder="CPF, telefone, e-mail ou chave aleatória">
+                    </div>
+                </div>
+
+                <div id="camposProduto" class="campos-condicionais">
+                    <div class="campo">
+                        <label for="linkProduto">Link do produto</label>
+                        <input id="linkProduto" type="url" placeholder="https://...">
+                    </div>
+
+                    <div class="campo">
+                        <label for="enderecoEntrega">Endereço completo para entrega</label>
+                        <textarea id="enderecoEntrega" placeholder="Rua, número, complemento, bairro, cidade, estado e CEP"></textarea>
+                    </div>
+                </div>
+
+                <button id="continuarSurpresa" class="botao botao-principal" type="button" disabled>
+                    Continuar para o presente surpresa 💖
+                </button>
+            </div>
+
+            <div id="telaDate" class="tela">
+                <span class="sobretitulo">Presente surpresa</span>
+                <div class="icone-grande">💖</div>
+
+                <h2>Você ganhou um date comigo!</h2>
+
+                <p class="texto-central">
+                    Agora vem a parte mais importante: escolha como prefere que esse date aconteça.
+                </p>
+
+                <div class="grupo-escolhas">
+                    <label class="escolha-card">
+                        <input type="radio" name="escolhaDate" value="Quero escolher nosso date">
+                        <span>
+                            <strong>Quero escolher nosso date!</strong>
+                            <small>Você escolhe comida, dia e horário.</small>
+                        </span>
+                    </label>
+
+                    <label class="escolha-card">
+                        <input type="radio" name="escolhaDate" value="Quero que você escolha nosso date">
+                        <span>
+                            <strong>Quero que você escolha o nosso date!</strong>
+                            <small>Arthur prepara o roteiro completo.</small>
+                        </span>
+                    </label>
+
+                    <label class="escolha-card">
+                        <input type="radio" name="escolhaDate" value="Não gostaria de ter um date">
+                        <span>
+                            <strong>Não gostaria de ter um date com você</strong>
+                            <small>Sem problema. Sua escolha será respeitada.</small>
+                        </span>
+                    </label>
+                </div>
+
+                <div id="camposEscolherDate" class="campos-condicionais">
+                    <div class="campo">
+                        <label for="tipoComida">Tipo de comida</label>
+                        <select id="tipoComida">
+                            <option value="">Selecione...</option>
+                            <option>Pizza</option>
+                            <option>Hambúrguer</option>
+                            <option>Sushi</option>
+                            <option>Comida italiana</option>
+                            <option>Comida mexicana</option>
+                            <option>Café e sobremesa</option>
+                            <option>Outro</option>
+                        </select>
+                    </div>
+
+                    <div class="grade-dupla">
+                        <div class="campo">
+                            <label for="diaDate">Dia preferido</label>
+                            <select id="diaDate">
+                                <option value="">Selecione...</option>
+                                <option>Sexta-feira à noite</option>
+                                <option>Sábado</option>
+                                <option>Domingo</option>
+                            </select>
+                        </div>
+
+                        <div class="campo">
+                            <label for="horarioDate">Horário preferido</label>
+                            <input id="horarioDate" type="time">
+                        </div>
+                    </div>
+
+                    <div class="campo">
+                        <label for="observacaoDate">Alguma sugestão ou preferência?</label>
+                        <textarea id="observacaoDate" placeholder="Lugar, atividade ou qualquer detalhe que gostaria de acrescentar..."></textarea>
+                    </div>
+                </div>
+
+                <div id="roteiroArthur" class="campos-condicionais">
+                    <div class="roteiro">
+                        <h3>Roteiro sugerido pelo Arthur</h3>
+
+                        <div class="roteiro-linha">
+                            <span>📅</span>
+                            <div><strong>Dia:</strong> 01/08</div>
+                        </div>
+
+                        <div class="roteiro-linha">
+                            <span>🕒</span>
+                            <div><strong>Começo:</strong> 15h</div>
+                        </div>
+
+                        <div class="roteiro-linha">
+                            <span>☕</span>
+                            <div><strong>Primeira parada:</strong> um café famoso aqui na minha região</div>
+                        </div>
+
+                        <div class="roteiro-linha">
+                            <span>🎬</span>
+                            <div><strong>Cinema:</strong> 18h — Homem-Aranha: Um Novo Dia</div>
+                        </div>
+
+                        <div class="roteiro-linha">
+                            <span>🕹️</span>
+                            <div><strong>Pós-filme:</strong> arcade do shopping ou jantar, o que preferirmos no momento</div>
+                        </div>
+
+                        <div class="roteiro-linha">
+                            <span>🌙</span>
+                            <div><strong>Previsão de término:</strong> 23h</div>
+                        </div>
+
+                        <div class="aviso">
+                            Podemos ajustar os horários caso fique muito tarde para você!
+                        </div>
+                    </div>
+
+                    <label class="escolha-card">
+                        <input id="aceitaRoteiro" type="checkbox">
+                        <span>
+                            <strong>Gostei desse roteiro</strong>
+                            <small>Marque para confirmar que essa sugestão funciona para você.</small>
+                        </span>
+                    </label>
+                </div>
+
+                <div id="mensagemRecusa" class="campos-condicionais">
+                    <div class="destaque-premio">
+                        <span>🤍</span>
+                        <div>
+                            <strong>Tudo bem!</strong>
+                            <p>Sua resposta será respeitada e o vale-presente continua sendo seu.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <button id="finalizarEscolhas" class="botao botao-principal" type="button" disabled>
+                    Finalizar e enviar minhas escolhas 💌
+                </button>
+
+                <p id="statusEnvio" class="status-envio"></p>
+            </div>
+
+            <div id="telaFinal" class="tela">
+                <span class="sobretitulo">Tudo confirmado</span>
+                <div class="icone-grande">💌</div>
+
+                <h2>Obrigada por participar, Amanda!</h2>
+
+                <p class="texto-central">
+                    Suas escolhas foram registradas e enviadas para o Arthur.
+                    Agora ele já sabe como entregar seu presente e qual foi sua decisão sobre o date.
+                </p>
+
+                <div class="destaque-premio">
+                    <span>✨</span>
+                    <div>
+                        <strong>Missão concluída!</strong>
+                        <p>O restante dessa história continua fora do quiz.</p>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <div class="rodape">
+            Feito especialmente para Amanda ♥
+        </div>
+    </main>
+
+    <div id="confetes" class="confetes"></div>
+
+    <script>
+        const EMAIL_DESTINO = "arthur.s.hausmann@gmail.com";
+
+        const perguntas = [
+            {
+                pergunta: "A primeira pergunta é de graça: qual é o meu nome?",
+                opcoes: ["Matheus", "Felipe", "Arthur", "Carlos"],
+                correta: 2,
+                mensagemCerta: "Começou bem! Essa realmente estava de graça 😌",
+                mensagemErrada: "Amanda... começamos com uma pequena crise de identidade 😅"
+            },
+            {
+                pergunta: "Quando é o meu aniversário?",
+                opcoes: ["05/02", "10/03", "08/06", "05/10"],
+                correta: 3,
+                mensagemCerta: "Acertou! Já pode deixar essa data salva 👀",
+                mensagemErrada: "Quase! Mas ainda dá tempo de anotar a data certa."
+            },
+            {
+                pergunta: "Qual das alternativas abaixo é o meu passatempo?",
+                opcoes: [
+                    "Ler",
+                    "Jogar (ex.: RPG, videogame e xadrez)",
+                    "Estudar assuntos específicos",
+                    "Todas as anteriores"
+                ],
+                correta: 3,
+                mensagemCerta: "Perfeito! Sou um homem de muitos hobbies.",
+                mensagemErrada: "A resposta era mais abrangente... gosto de fazer tudo isso!"
+            },
+            {
+                pergunta: "Qual é a minha comida favorita?",
+                opcoes: ["Pizza", "Hambúrguer", "Sushi", "Nenhuma das anteriores"],
+                correta: 0,
+                mensagemCerta: "Pizza! Uma informação útil para um possível encontro 🍕",
+                mensagemErrada: "Era pizza! Mas aceito uma revanche gastronômica."
+            },
+            {
+                pergunta: "Quais são os meus planos preferidos para o final de semana?",
+                opcoes: [
+                    "Restaurantes",
+                    "Conhecer novos lugares",
+                    "Caseiro (ficar por casa)",
+                    "Shopping spree (ir em diversas lojas)"
+                ],
+                correta: 2,
+                mensagemCerta: "Acertou! Um bom programa caseiro sempre ganha pontos 🏠",
+                mensagemErrada: "Meu lado caseiro venceu essa disputa."
+            }
+        ];
+
+        const telas = document.querySelectorAll(".tela");
+        const telaInicial = document.getElementById("telaInicial");
+        const telaQuiz = document.getElementById("telaQuiz");
+        const telaResultado = document.getElementById("telaResultado");
+        const telaValePresente = document.getElementById("telaValePresente");
+        const telaDate = document.getElementById("telaDate");
+        const telaFinal = document.getElementById("telaFinal");
+
+        const botaoComecar = document.getElementById("botaoComecar");
+        const botaoProxima = document.getElementById("botaoProxima");
+        const tentarNovamente = document.getElementById("tentarNovamente");
+        const irEscolherPremio = document.getElementById("irEscolherPremio");
+        const continuarSurpresa = document.getElementById("continuarSurpresa");
+        const finalizarEscolhas = document.getElementById("finalizarEscolhas");
+
+        const contadorPergunta = document.getElementById("contadorPergunta");
+        const tituloPergunta = document.getElementById("tituloPergunta");
+        const pontosEl = document.getElementById("pontos");
+        const barraProgresso = document.getElementById("barraProgresso");
+        const opcoesEl = document.getElementById("opcoes");
+        const feedback = document.getElementById("feedback");
+
+        const placarFinal = document.getElementById("placarFinal");
+        const tituloResultado = document.getElementById("tituloResultado");
+        const textoResultado = document.getElementById("textoResultado");
+        const iconeResultado = document.getElementById("iconeResultado");
+        const premioAprovada = document.getElementById("premioAprovada");
+        const premioReprovada = document.getElementById("premioReprovada");
+
+        const camposPix = document.getElementById("camposPix");
+        const camposProduto = document.getElementById("camposProduto");
+        const chavePix = document.getElementById("chavePix");
+        const linkProduto = document.getElementById("linkProduto");
+        const enderecoEntrega = document.getElementById("enderecoEntrega");
+
+        const camposEscolherDate = document.getElementById("camposEscolherDate");
+        const roteiroArthur = document.getElementById("roteiroArthur");
+        const mensagemRecusa = document.getElementById("mensagemRecusa");
+        const tipoComida = document.getElementById("tipoComida");
+        const diaDate = document.getElementById("diaDate");
+        const horarioDate = document.getElementById("horarioDate");
+        const observacaoDate = document.getElementById("observacaoDate");
+        const aceitaRoteiro = document.getElementById("aceitaRoteiro");
+        const statusEnvio = document.getElementById("statusEnvio");
+
+        let perguntaAtual = 0;
+        let pontuacao = 0;
+        let respondida = false;
+        let respostas = [];
+        let escolhaPremio = "";
+        let escolhaDate = "";
+
+        function mostrarTela(tela) {
+            telas.forEach(item => item.classList.remove("ativa"));
+            tela.classList.add("ativa");
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+
+        function iniciarQuiz() {
+            perguntaAtual = 0;
+            pontuacao = 0;
+            respondida = false;
+            respostas = [];
+            mostrarTela(telaQuiz);
+            renderizarPergunta();
+        }
+
+        function renderizarPergunta() {
+            const atual = perguntas[perguntaAtual];
+
+            respondida = false;
+            contadorPergunta.textContent = `Pergunta ${perguntaAtual + 1} de ${perguntas.length}`;
+            tituloPergunta.textContent = atual.pergunta;
+            pontosEl.textContent = `${pontuacao} ${pontuacao === 1 ? "ponto" : "pontos"}`;
+            barraProgresso.style.width = `${((perguntaAtual + 1) / perguntas.length) * 100}%`;
+            feedback.textContent = "";
+            feedback.className = "feedback";
+            botaoProxima.disabled = true;
+
+            botaoProxima.textContent =
+                perguntaAtual === perguntas.length - 1
+                    ? "Ver meu resultado 🏆"
+                    : "Próxima pergunta →";
+
+            opcoesEl.innerHTML = "";
+
+            atual.opcoes.forEach((texto, indice) => {
+                const botao = document.createElement("button");
+                botao.type = "button";
+                botao.className = "opcao";
+                botao.innerHTML = `
+                    <span class="letra">${String.fromCharCode(65 + indice)}</span>
+                    <span>${escaparHtml(texto)}</span>
+                `;
+                botao.addEventListener("click", () => selecionarResposta(indice));
+                opcoesEl.appendChild(botao);
+            });
+        }
+
+        function selecionarResposta(indice) {
+            if (respondida) return;
+
+            respondida = true;
+
+            const atual = perguntas[perguntaAtual];
+            const botoes = opcoesEl.querySelectorAll(".opcao");
+            const acertou = indice === atual.correta;
+
+            botoes.forEach((botao, i) => {
+                botao.disabled = true;
+
+                if (i === atual.correta) {
+                    botao.classList.add("correta");
+                }
+
+                if (i === indice && !acertou) {
+                    botao.classList.add("errada");
+                }
+            });
+
+            if (acertou) {
+                pontuacao++;
+                feedback.textContent = atual.mensagemCerta;
+                feedback.classList.add("sucesso");
+            } else {
+                feedback.textContent = atual.mensagemErrada;
+                feedback.classList.add("erro");
+            }
+
+            pontosEl.textContent = `${pontuacao} ${pontuacao === 1 ? "ponto" : "pontos"}`;
+
+            respostas.push({
+                pergunta: atual.pergunta,
+                resposta: atual.opcoes[indice],
+                respostaCorreta: atual.opcoes[atual.correta],
+                acertou
+            });
+
+            botaoProxima.disabled = false;
+        }
+
+        function proximaPergunta() {
+            if (!respondida) return;
+
+            if (perguntaAtual < perguntas.length - 1) {
+                perguntaAtual++;
+                renderizarPergunta();
+            } else {
+                mostrarResultado();
+            }
+        }
+
+        function mostrarResultado() {
+            mostrarTela(telaResultado);
+
+            placarFinal.textContent = `${pontuacao}/${perguntas.length}`;
+
+            if (pontuacao >= 4) {
+                iconeResultado.textContent = "🏆";
+                tituloResultado.textContent = "Parabéns, Amanda!";
+                textoResultado.textContent =
+                    "Você acertou pelo menos 4 perguntas e desbloqueou os dois prêmios!";
+                premioAprovada.style.display = "block";
+                premioReprovada.style.display = "none";
+                soltarConfetes(90);
+            } else {
+                iconeResultado.textContent = "😅";
+                tituloResultado.textContent = "Foi por pouco!";
+                textoResultado.textContent =
+                    "Você precisa acertar 4 ou 5 perguntas para avançar para os prêmios.";
+                premioAprovada.style.display = "none";
+                premioReprovada.style.display = "block";
+            }
+        }
+
+        document.querySelectorAll('input[name="tipoPremio"]').forEach(radio => {
+            radio.addEventListener("change", event => {
+                escolhaPremio = event.target.value;
+
+                camposPix.classList.toggle("ativo", escolhaPremio === "PIX");
+                camposProduto.classList.toggle("ativo", escolhaPremio === "Produto por link");
+
+                validarPremio();
+            });
+        });
+
+        [chavePix, linkProduto, enderecoEntrega].forEach(campo => {
+            campo.addEventListener("input", validarPremio);
+        });
+
+        function validarPremio() {
+            let valido = false;
+
+            if (escolhaPremio === "PIX") {
+                valido = chavePix.value.trim().length >= 3;
+            }
+
+            if (escolhaPremio === "Produto por link") {
+                valido =
+                    linkProduto.value.trim().startsWith("http") &&
+                    enderecoEntrega.value.trim().length >= 10;
+            }
+
+            continuarSurpresa.disabled = !valido;
+        }
+
+        document.querySelectorAll('input[name="escolhaDate"]').forEach(radio => {
+            radio.addEventListener("change", event => {
+                escolhaDate = event.target.value;
+
+                camposEscolherDate.classList.toggle(
+                    "ativo",
+                    escolhaDate === "Quero escolher nosso date"
+                );
+
+                roteiroArthur.classList.toggle(
+                    "ativo",
+                    escolhaDate === "Quero que você escolha nosso date"
+                );
+
+                mensagemRecusa.classList.toggle(
+                    "ativo",
+                    escolhaDate === "Não gostaria de ter um date"
+                );
+
+                validarDate();
+            });
+        });
+
+        [tipoComida, diaDate, horarioDate, aceitaRoteiro].forEach(campo => {
+            campo.addEventListener("input", validarDate);
+            campo.addEventListener("change", validarDate);
+        });
+
+        function validarDate() {
+            let valido = false;
+
+            if (escolhaDate === "Quero escolher nosso date") {
+                valido =
+                    tipoComida.value !== "" &&
+                    diaDate.value !== "" &&
+                    horarioDate.value !== "";
+            }
+
+            if (escolhaDate === "Quero que você escolha nosso date") {
+                valido = aceitaRoteiro.checked;
+            }
+
+            if (escolhaDate === "Não gostaria de ter um date") {
+                valido = true;
+            }
+
+            finalizarEscolhas.disabled = !valido;
+        }
+
+        async function enviarResultado() {
+            finalizarEscolhas.disabled = true;
+            finalizarEscolhas.textContent = "Enviando... ⏳";
+            statusEnvio.textContent = "Registrando suas escolhas...";
+            statusEnvio.className = "status-envio";
+
+            const detalhesRespostas = respostas.map((item, indice) => {
+                return [
+                    `${indice + 1}. ${item.pergunta}`,
+                    `Resposta: ${item.resposta}`,
+                    `Correta: ${item.respostaCorreta}`,
+                    `Resultado: ${item.acertou ? "Acertou" : "Errou"}`
+                ].join("\n");
+            }).join("\n\n");
+
+            let detalhesPremio = `Tipo escolhido: ${escolhaPremio}`;
+
+            if (escolhaPremio === "PIX") {
+                detalhesPremio += `\nChave PIX: ${chavePix.value.trim()}`;
+            } else {
+                detalhesPremio +=
+                    `\nLink do produto: ${linkProduto.value.trim()}` +
+                    `\nEndereço de entrega: ${enderecoEntrega.value.trim()}`;
+            }
+
+            let detalhesDate = `Escolha: ${escolhaDate}`;
+
+            if (escolhaDate === "Quero escolher nosso date") {
+                detalhesDate +=
+                    `\nTipo de comida: ${tipoComida.value}` +
+                    `\nDia preferido: ${diaDate.value}` +
+                    `\nHorário preferido: ${horarioDate.value}` +
+                    `\nObservações: ${observacaoDate.value.trim() || "Nenhuma"}`;
+            }
+
+            if (escolhaDate === "Quero que você escolha nosso date") {
+                detalhesDate +=
+                    "\nRoteiro aceito: Dia 01/08, início às 15h, café, cinema às 18h, arcade ou jantar, término previsto às 23h.";
+            }
+
+            const dados = new FormData();
+            dados.append("_subject", "Amanda finalizou o quiz e escolheu os prêmios 💕");
+            dados.append("_captcha", "false");
+            dados.append("_template", "table");
+            dados.append("Pontuação", `${pontuacao} de ${perguntas.length}`);
+            dados.append("Respostas do quiz", detalhesRespostas);
+            dados.append("Vale-presente", detalhesPremio);
+            dados.append("Decisão sobre o date", detalhesDate);
+            dados.append("Data e hora", new Date().toLocaleString("pt-BR"));
+
+            try {
+                const resposta = await fetch(
+                    `https://formsubmit.co/ajax/${encodeURIComponent(EMAIL_DESTINO)}`,
+                    {
+                        method: "POST",
+                        headers: {
+                            Accept: "application/json"
+                        },
+                        body: dados
+                    }
+                );
+
+                if (!resposta.ok) {
+                    throw new Error("Falha no envio");
+                }
+
+                statusEnvio.textContent = "Escolhas enviadas com sucesso! 💕";
+                statusEnvio.className = "status-envio sucesso";
+
+                setTimeout(() => {
+                    mostrarTela(telaFinal);
+                    soltarConfetes(80);
+                }, 700);
+            } catch (erro) {
+                console.error(erro);
+                statusEnvio.textContent =
+                    "Não foi possível enviar. Verifique a internet e tente novamente.";
+                statusEnvio.className = "status-envio erro";
+                finalizarEscolhas.disabled = false;
+                finalizarEscolhas.textContent = "Tentar enviar novamente 💌";
+            }
+        }
+
+        function soltarConfetes(quantidade) {
+            const container = document.getElementById("confetes");
+            const cores = ["#ff4f87", "#7657ff", "#ffc857", "#50c9a7", "#ff91b5"];
+
+            container.innerHTML = "";
+
+            for (let i = 0; i < quantidade; i++) {
+                const confete = document.createElement("span");
+
+                confete.className = "confete";
+                confete.style.left = `${Math.random() * 100}%`;
+                confete.style.background = cores[Math.floor(Math.random() * cores.length)];
+                confete.style.animationDuration = `${Math.random() * 2.5 + 2.5}s`;
+                confete.style.animationDelay = `${Math.random() * .8}s`;
+
+                container.appendChild(confete);
+            }
+
+            setTimeout(() => {
+                container.innerHTML = "";
+            }, 5600);
+        }
+
+        function escaparHtml(texto) {
+            return String(texto)
+                .replaceAll("&", "&amp;")
+                .replaceAll("<", "&lt;")
+                .replaceAll(">", "&gt;")
+                .replaceAll('"', "&quot;")
+                .replaceAll("'", "&#039;");
+        }
+
+        botaoComecar.addEventListener("click", iniciarQuiz);
+        botaoProxima.addEventListener("click", proximaPergunta);
+        tentarNovamente.addEventListener("click", iniciarQuiz);
+
+        irEscolherPremio.addEventListener("click", () => {
+            mostrarTela(telaValePresente);
+        });
+
+        continuarSurpresa.addEventListener("click", () => {
+            mostrarTela(telaDate);
+        });
+
+        finalizarEscolhas.addEventListener("click", enviarResultado);
+    </script>
+</body>
+</html>
